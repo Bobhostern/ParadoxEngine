@@ -1,0 +1,5 @@
+<musicfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/music.xsd">
+
+	<music ident="TEST" musictype="MUSIC" file="Always Look On The Bright Side Of Life.ogg" />
+
+</musicfile>

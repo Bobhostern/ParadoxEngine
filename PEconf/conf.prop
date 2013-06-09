@@ -1,0 +1,5 @@
+! Types are FOLDER
+game.type = FOLDER
+! Name of game
+! ~FOLDER: Name of folder
+game.name = pdxGame

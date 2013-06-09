@@ -1,0 +1,113 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+			Schema for Actors of the Paradox Engine
+			Copyright 2013 "Bob Hostern". All rights reserved.
+		</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:complexType name="actor_t">
+		<xsd:sequence>
+			<xsd:element name="stats" type="stats_t" minOccurs="0" />
+			<xsd:element name="boosts" type="boosts_t" minOccurs="0" />
+			<xsd:element name="skills" type="skills_t" minOccurs="0" />
+			<xsd:element name="keybinds" type="keybindscripts_t" minOccurs="0" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+	</xsd:complexType>
+	
+	<xsd:simpleType name="actortype_t">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PLAYER" />
+			<xsd:enumeration value="NPC" />
+			<xsd:enumeration value="ENEMY" />
+		</xsd:restriction>
+	</xsd:simpleType>
+		
+	<xsd:complexType name="stats_t">
+		<xsd:all>
+			<xsd:element name="baseHP" type="xsd:nonNegativeInteger" />
+			<xsd:element name="baseMP" type="xsd:nonNegativeInteger" />
+			<xsd:element name="baseAttack" type="xsd:nonNegativeInteger" />
+			<xsd:element name="baseDefense" type="xsd:nonNegativeInteger" />
+			<xsd:element name="baseAgility" type="xsd:nonNegativeInteger" />
+			<xsd:element name="baseStrength" type="xsd:nonNegativeInteger" />
+			<xsd:element name="baseMagicAttack" type="xsd:nonNegativeInteger" />
+			<xsd:element name="baseMagicDefense" type="xsd:nonNegativeInteger" />
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="boosts_t">
+		<xsd:all>
+			<xsd:element name="HPBoost" type="xsd:integer" />
+			<xsd:element name="MPBoost" type="xsd:integer" />
+			<xsd:element name="attackBoost" type="xsd:integer" />
+			<xsd:element name="defenseBoost" type="xsd:integer" />
+			<xsd:element name="agilityBoost" type="xsd:integer" />
+			<xsd:element name="strengthBoost" type="xsd:integer" />
+			<xsd:element name="magicAttackBoost" type="xsd:integer" />
+			<xsd:element name="magicDefenseBoost" type="xsd:integer" />
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="skills_t">
+		<xsd:sequence>
+			<xsd:element name="skill" type="skill_t" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="folder" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="skill_t">
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+		<xsd:attribute name="file" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="keybindscripts_t">
+		<xsd:sequence>
+			<xsd:element name="keybind" type="keybind_t" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="folder" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="keybind_t">
+		<xsd:attribute name="key" type="akey_t" use="required" />
+		<xsd:attribute name="scriptname" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+	<xsd:simpleType name="akey_t">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1" fixed="true" />
+			<xsd:enumeration value="ENTER" />
+			<xsd:enumeration value="TAB" />
+			<xsd:enumeration value="ESC" />
+			<xsd:enumeration value="RSHIFT" />
+			<xsd:enumeration value="RALT" />
+			<xsd:enumeration value="RDELETE" />
+			<xsd:enumeration value="RMETA" />
+			<xsd:enumeration value="LSHIFT" />
+			<xsd:enumeration value="LALT" />
+			<xsd:enumeration value="LDELETE" />
+			<xsd:enumeration value="LMETA" />
+			<xsd:enumeration value="UPARROW" />
+			<xsd:enumeration value="DOWNARROW" />
+			<xsd:enumeration value="LEFTARROW" />
+			<xsd:enumeration value="RIGHTARROW" />
+			<xsd:enumeration value="F1" />
+			<xsd:enumeration value="F2" />
+			<xsd:enumeration value="F3" />
+			<xsd:enumeration value="F4" />
+			<xsd:enumeration value="F5" />
+			<xsd:enumeration value="F6" />
+			<xsd:enumeration value="F7" />
+			<xsd:enumeration value="F8" />
+			<xsd:enumeration value="F9" />
+			<xsd:enumeration value="F10" />
+			<xsd:enumeration value="F11" />
+			<xsd:enumeration value="F12" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="actor" type="actor_t" />
+
+</xsd:schema>

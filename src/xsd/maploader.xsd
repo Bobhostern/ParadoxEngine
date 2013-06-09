@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+			Schema for the Map Loader of the Paradox Engine
+			Copyright 2013 "Bob Hostern". All rights reserved.
+		</xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:complexType name="maploader_t">
+		<xsd:sequence>
+			<xsd:element name="map" type="lmap_t" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="lmap_t">
+		<xsd:attribute name="mapname" type="xsd:string" use="required" />
+		<xsd:attribute name="mapfolder" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+	<xsd:element name="maploader" type="maploader_t" />
+
+</xsd:schema>
