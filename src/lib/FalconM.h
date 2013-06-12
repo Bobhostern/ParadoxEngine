@@ -15,5 +15,8 @@ class FalconM
 };
 
 /* static FALCON_FUNC pushCard(Falcon::VMachine* vm); */
+#ifndef _NO_WAIT_FUNC
+FALCON_FUNC waitSeconds(Falcon::VMachine* vm);
+#endif
 
 #endif // __FALCONM_H_

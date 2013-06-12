@@ -11,9 +11,17 @@ solution "ParadoxEngine"
 		}
 	}
 
+	newoption {
+		trigger = "disable-wait",
+		description = "Disable wait function"
+	}
+
 	if not _OPTIONS["build"] then
 		_OPTIONS["build"] = "static"
 	end
+
+	configuration "disable-wait"
+		defines { "_NO_WAIT_FUNC" }
 
 	project "pugixml"
 		language "C++"
@@ -57,7 +65,7 @@ solution "ParadoxEngine"
 	project "ParadoxEngineLIB"
 		language "C++"
 		location "build/lib"
-		links { "falcon_engine", "ParadoxEngineXSDLIB" }
+		links { "falcon_engine", "ParadoxEngineXSDLIB", "SDL", "SDLmain" }
 		files { "src/lib/**.cpp", "src/lib/**.h" }
 
 		configuration "static"
@@ -121,7 +129,7 @@ solution "ParadoxEngine"
 		files { "src/main.*" }
 
 		configuration "static"
-			links { "ParadoxEngineLIB", "ParadoxEngineSoundLib", "ParadoxEngineXSDLIB", "sfml-audio", "sfml-system",  "PocoFoundation", "PocoUtil", "falcon_engine", "xerces-c", "pugixml" }
+			links { "ParadoxEngineLIB", "ParadoxEngineSoundLib", "ParadoxEngineXSDLIB", "sfml-audio", "sfml-system",  "PocoFoundation", "PocoUtil", "falcon_engine", "xerces-c", "pugixml", "SDL", "SDLmain" }
 
 		configuration "dynamic"
 			links { "ParadoxEngineLIB", "ParadoxEngineSoundLib", "ParadoxEngineXSDLIB", "PocoFoundation", "PocoUtil" }

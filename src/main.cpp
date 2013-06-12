@@ -1,28 +1,10 @@
-#include <Poco/Foundation.h>
-#include <Poco/Util/PropertyFileConfiguration.h>
-#include "lib/loadFalcon.h"
-#include "lib/Log.h"
-#include "lib/Info.h"
-
-using Poco::AutoPtr;
-using Poco::Util::PropertyFileConfiguration;
-
+#include "lib/Game.h"
 int main()
 {
-   	AutoPtr<PropertyFileConfiguration> pConf;
-	try
+	Game app;
+	if(!app.onInit())
 	{
-		pConf = new PropertyFileConfiguration("PEconf/conf.prop");
-		Info::setGameName(pConf->getString("game.name"));
+		Log::log("Error initializing engine. See above warning.");
 	}
-	catch(Poco::FileNotFoundException ex)
-	{
-		Log::log("Cannot find PEconf/conf.prop");
-	}
-	catch(Poco::NotFoundException ex)
-	{
-		Log::log("conf.prop needs game.name defined");
-	}
-        loadFalcon(Info::getGameFolderName() + "game.fal", true, "onLoad", 0);
-        loadFalcon(Info::getGameFolderName() + "game.fal", true, "onClose", 0, true);
+	return app.run();
 }

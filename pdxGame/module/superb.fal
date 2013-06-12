@@ -1,0 +1,12 @@
+class Superb
+	init
+		Hub.setInteger("superb", 0)
+	end
+	function superb(x)
+		printl("Superb! You called this function with value ", x, "!")
+		Hub.setInteger("superb", Hub.getVariable("superb") + 1)
+		printl("The variable superb is now at ", Hub.getVariable("superb"), ".")
+	end
+end
+
+export

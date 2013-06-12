@@ -1,0 +1,126 @@
+load .superb
+
+/*
+	Returns:
+	Specification Test #1 -- Info
+	Version number: 0.01
+	Game name: pdxGame
+	Specification Test #2 -- Logging
+	NOTICE: Just a test
+	INFORMATION: Just a test
+	WARNING: Just a test
+	Doesn't test LOG_LEVEL_ERROR, as that will shut down the program
+	Specification Test #3 -- Loading Music
+	true
+	Specification Test #4 -- Hub Variable Manager
+	2.32
+	2
+	Papa Potatoes Pizza Shop
+	false
+	true
+	Nil
+	Sanity check: C++ true == Falcon true
+
+	if the engine is properly defined
+*/
+
+function specTest()
+	loadscrb(20, 10)
+	Game.versionCheck(0.01)
+	> "Specification Test #1 -- Info"
+	>> "Version number: "
+	> Info.engineVersion()
+	>> "Game name: "
+	> Info.gameName()
+	> "Specification Test #2 -- Logging"
+	Logger.log(LOG_LEVEL_NOTICE, "Just a test")
+	Logger.log(LOG_LEVEL_INFORMATION, "Just a test")
+	Logger.log(LOG_LEVEL_WARNING, "Just a test")
+	> "Doesn't test LOG_LEVEL_ERROR, as that will shut down the program"
+	> "Specification Test #3 -- Loading Music"
+	> MusicEngine.loadMusic()
+	> "Specification Test #4 -- Hub Variable Manager"
+	Hub.setDouble("1doub", 2.32);
+	> Hub.getVariable("1doub");
+	Hub.setInteger("1int", 2);
+	> Hub.getVariable("1int");
+	Hub.setString("1string", "Papa Potatoes Pizza Shop");
+	> Hub.getVariable("1string");
+	Hub.setBoolean("1bool", false);
+	> Hub.getVariable("1bool");
+	Hub.setBoolean("1bool", true);
+	> Hub.getVariable("1bool");
+	> Hub.getVariable("1void");
+	bool = Hub.getVariable("1bool")
+	if bool == true
+		> "Sanity check: C++ true == Falcon true"
+	end
+	Hub.setVariable(HUBVAR_DOUBLE, "rdint", numeric(21))
+	> Hub.getVariable("rdint")
+end
+
+/* 
+	Returns:
+	Superb! You called this function with value 1!
+	The variable superb is now at 1.
+	Superb! You called this function with value 2!
+	The variable superb is now at 2.
+	Superb! You called this function with value 20!
+	The variable superb is now at 3.
+	Superb! You called this function with value 3!
+	The variable superb is now at 1.
+	Superb! You called this function with value 4!
+	The variable superb is now at 2.
+	Superb! You called this function with value 40!
+	The variable superb is now at 3.
+	Superb! You called this function with value 60!
+	The variable superb is now at 4.
+
+	if the Hub and the Superb class ( see superb.fal ) are implemented properly.
+*/
+
+function loadscr(x, y)
+	i = 0
+	while i < x
+		print("Loading ", i++, "%", "\r")
+		wait(random()/y)
+	end
+end
+
+function loadscrb(x, y)
+	i = 0
+	sym = ""
+	while i < x
+		if i%4 == 0
+			sym = "|"
+		elif i%4 == 1
+			sym = "/"
+		elif i%4 == 2
+			sym = "-"
+		elif i%4 == 3
+			sym = "\\"
+		end
+		print("Loading...", sym, "\r")
+		wait(random()/y)
+		i++
+	end
+end
+
+function onClose()
+	loadscr(20, 10)
+	Logger.log(LOG_LEVEL_NOTICE, "Closing engine...")
+end
+
+function superbTest()
+	sup = Superb()
+	sup.superb(1)
+	sup.superb(2)
+	sup.superb(20)
+	sup2 = Superb()
+	sup2.superb(3)
+	sup2.superb(4)
+	sup2.superb(40)
+	Superb.superb(60)
+end
+
+export

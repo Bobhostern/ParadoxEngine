@@ -1,8 +1,12 @@
 #include "FalconM.h"
 #include "Log.h"
 #include "Info.h"
+#include "stringh.h"
 #include "../sound/MusicFileLoader.h"
 #include "Hub.h"
+#ifndef _NO_WAIT_FUNC
+	#include <SDL/SDL.h>
+#endif
 
 FalconM::FalconM()
 {
@@ -18,7 +22,8 @@ int FalconM::embed(std::string script_name, bool core, std::string funcname, int
 {
 	Falcon::ModuleLoader theLoader(".");
 	theLoader.addFalconPath();
-	
+	theLoader.addDirectoryBack(FString::fromString("./" + Info::getGameFolderName()));	
+
 	Falcon::Runtime rt(&theLoader);
 	rt.loadFile(script_name.c_str());
 	
@@ -61,6 +66,10 @@ Falcon::Module* FalconM::createAppModule()
 	module->addClassMethod(cls_pinfo, "fromTileset", &FTileFromXML).
 		asSymbol()->addParam("tileset")->addParam("idcode");*/
 
+	#ifndef _NO_WAIT_FUNC
+	module->addExtFunc("wait", waitSeconds);
+	#endif
+
 	Falcon::Symbol* single_appinfo = module->addSingleton("Info");
 	Falcon::Symbol* cls_pinfo = single_appinfo->getInstance();
 	module->addClassMethod(cls_pinfo, "engineVersion", &VNumFWrap);
@@ -82,6 +91,10 @@ Falcon::Module* FalconM::createAppModule()
 	Falcon::Symbol* cls_pinfo6 = single_appinfo6->getInstance();
 	module->addClassMethod(cls_pinfo6, "loadMusic", &loadMusic);
 
+	module->addConstant("HUBVAR_DOUBLE", Falcon::int64(PE::Hub::DOUBLE));
+	module->addConstant("HUBVAR_INTEGER", Falcon::int64(PE::Hub::INTEGER));
+	module->addConstant("HUBVAR_STRING", Falcon::int64(PE::Hub::STRING));
+	module->addConstant("HUBVAR_BOOLEAN", Falcon::int64(PE::Hub::BOOLEAN));
 	Falcon::Symbol* single_appinfo7 = module->addSingleton("Hub");
 	Falcon::Symbol* cls_pinfo7 = single_appinfo7->getInstance();
 	module->addClassMethod(cls_pinfo7, "setDouble", &varDouble);
@@ -89,6 +102,8 @@ Falcon::Module* FalconM::createAppModule()
 	module->addClassMethod(cls_pinfo7, "setString", &varString);
 	module->addClassMethod(cls_pinfo7, "setBoolean", &varBoolean);
 	module->addClassMethod(cls_pinfo7, "getVariable", &varGet);
+	module->addClassMethod(cls_pinfo7, "deleteVariable", &varDel);
+	module->addClassMethod(cls_pinfo7, "setVariable", &varSet);
 	
 	return module;
 }
@@ -97,6 +112,28 @@ Falcon::Module* FalconM::createAppModule()
 static FALCON_FUNC pushCard(Falcon::VMachine* vm)
 {
 	Falcon::Item* it = vm->param(0);
-	vm->retval(vm->systemData().sleep(it->asNumeric()));
+	vm->retval();
 }
 */
+
+#ifndef _NO_WAIT_FUNC
+
+void breakTime(int seconds)
+{
+	SDL_Delay(seconds * 1000);
+}
+
+FALCON_FUNC waitSeconds(Falcon::VMachine* vm)
+{
+	Falcon::Item* secs = vm->param(0);
+	if(secs == NULL || !secs->isOrdinal())
+	{
+		throw new Falcon::ParamError(Falcon::ErrorParam(Falcon::e_inv_params, __LINE__)
+		.extra("Ordinal"));
+	}
+	
+	if(vm->systemData().sleep(secs->asNumeric()))
+		breakTime(secs->asNumeric());
+}
+
+#endif

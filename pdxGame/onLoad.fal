@@ -1,0 +1,4 @@
+load module.lib
+
+specTest()
+superbTest()

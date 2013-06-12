@@ -41,6 +41,7 @@ class Hub
 		static void registerString(std::string,std::string);
 		static void registerBoolean(std::string,bool);
 		static HubVariable grabVariable(std::string);
+		static void clearVariable(std::string);
 	private:
 		static std::map<std::string, HubVariable> variables;
 };
@@ -50,5 +51,7 @@ FALCON_FUNC varInteger(Falcon::VMachine* vm);
 FALCON_FUNC varString(Falcon::VMachine* vm);
 FALCON_FUNC varBoolean(Falcon::VMachine* vm);
 FALCON_FUNC varGet(Falcon::VMachine* vm);
+FALCON_FUNC varSet(Falcon::VMachine* vm);
+FALCON_FUNC varDel(Falcon::VMachine* vm);
 
 #endif // __HUB_H_

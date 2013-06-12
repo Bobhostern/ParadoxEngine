@@ -1,4 +1,4 @@
-! Types are FOLDER
+! Types are FOLDER, CDIR
 game.type = FOLDER
 ! Name of game
 ! ~FOLDER: Name of folder

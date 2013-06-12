@@ -9,7 +9,7 @@ bool Info::gns = false;
 
 double Info::getVersionNum()
 {
-	return 0.01;
+	return 0.02;
 }
 
 std::string Info::getGameName()
